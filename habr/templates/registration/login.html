@@ -2,15 +2,15 @@
 {% block content %}
 
 {% if form.errors %}
-  <p>Имя пользователя и пароль неверны.</p>
+    <p>Имя пользователя или пароль не совпадают.</p>
 {% endif %}
 
 {% if next %}
-  {% if user.is_authenticated %}
-    <p>Вы не имеете доступа к данной странице</p>
-  {% else %}
-    <p>Авторизуйтесь, чтобы увидеть данную страницу</p>
-  {% endif %}
+    {% if user.is_authenticated %}
+        <p>Вы не имеете доступа к данной странице</p>
+    {% else %}
+        <p>Авторизуйтесь, чтобы увидеть данную страницу</p>
+    {% endif %}
 {% endif %}
 
 <form method="post" action="{% url 'login' %}">
@@ -18,13 +18,13 @@
 <table>
 
 <tr>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
 </tr>
 
 <tr>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
 </tr>
 </table>
 
@@ -32,6 +32,6 @@
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
 
 {% endblock %}

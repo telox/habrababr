@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.utils import timezone
 from .models import Post
-from django.shortcuts import render, get_object_or_404
 from .forms import PostForm
-from django.shortcuts import redirect
+from django.utils import timezone
+from django.views.generic.edit import FormView
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, get_object_or_404, redirect
+
 
 def post_list(request):
 	posts = Post.objects.all()
@@ -40,3 +41,19 @@ def post_edit(request, id):
     else:
         form = PostForm(instance=post)
     return render(request, 'habr/post_edit.html', {'form': form})
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            login(request, user)
+            return redirect('/')
+        else:
+            for msg in form.error_messages:
+                print(form.error_messages[msg])
+            return render(request = request, template_name = "registration/register.html", context={"form":form})
+
+        form = UserCreationForm
+        return render(request = request, template_name = "registration/register.html", context={"form":form})
