@@ -42,18 +42,15 @@ def post_edit(request, id):
         form = PostForm(instance=post)
     return render(request, 'habr/post_edit.html', {'form': form})
 
-def register(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
-            login(request, user)
-            return redirect('/')
-        else:
-            for msg in form.error_messages:
-                print(form.error_messages[msg])
-            return render(request = request, template_name = "registration/register.html", context={"form":form})
 
-        form = UserCreationForm
-        return render(request = request, template_name = "registration/register.html", context={"form":form})
+class register(FormView):
+    form_class = UserCreationForm
+    success_url = "/login/"
+    template_name = "registration/register.html"
+
+    def form_valid(self, form):
+        form.save()
+        return super(register, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return super(register, self).form_invalid(form)

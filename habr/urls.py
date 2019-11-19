@@ -9,5 +9,5 @@ urlpatterns = [
     path('post/new/', views.post_new, name='post_new'),
     path('post/<int:id>/edit/', views.post_edit, name='post_edit'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('registration/register', views.register, name="register"),
+    path('registration/register/', views.register.as_view(), name="register"),
 ]
