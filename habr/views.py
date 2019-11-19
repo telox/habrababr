@@ -45,7 +45,7 @@ def post_edit(request, id):
 
 class register(FormView):
     form_class = UserCreationForm
-    success_url = "/login/"
+    success_url = "accounts/login/"
     template_name = "registration/register.html"
 
     def form_valid(self, form):
